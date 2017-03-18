@@ -5,8 +5,7 @@ import base64
 app = Flask(__name__)
 import base64
 reponame = []
-github = Github("ebd3a0c841221802a27d9204fc76f701a5c40b0f")
-#github = Github()
+github = Github()
 reponame = str(sys.argv[1]).split("/")
 @app.route("/v1/<filename>")
 def get_config(filename):
