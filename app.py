@@ -5,14 +5,18 @@ import base64
 app = Flask(__name__)
 import base64
 reponame = []
-github = Github()
+github = Github("ebd3a0c841221802a27d9204fc76f701a5c40b0f")
+#github = Github()
 reponame = str(sys.argv[1]).split("/")
-#github = Github(reponame[4],baseurl)
 @app.route("/v1/<filename>")
 def get_config(filename):
-   user = github.get_user()
-   repository = user.get_repo(reponame[4])
-   file_content = repository.get_file_contents(filename).content
-   return base64.b64decode(file_content)
+ try:
+    if('.yml' in filename or '.json' in filename):
+     file_content = github.get_user(reponame[3]).get_repo(reponame[4]).get_file_contents(filename).content
+     return base64.b64decode(file_content)
+    else:
+       return "Please provide either yml or json file"
+ except Exception:
+      return "No such file found"
 if __name__ == "__main__":
     app.run(debug=True,host='0.0.0.0')
